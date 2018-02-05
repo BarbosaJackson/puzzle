@@ -11,8 +11,8 @@ int check_win(void);
 
 void init_game(void) {
 	int i, n, max;
-	srand(100);
-	max = rand() % 5000000;
+	srand(time(NULL));
+	max = rand() % 50000;
 	for(i = 0; i < max; i++) {
 		n = rand() % 4;
 		if(n == 1) {
@@ -41,7 +41,7 @@ void init_table(void) {
 
 void print_table(void) {
 	int i, j;
-	printf("\e[1;1H\e[2J");	
+	CLEAR_SCREEN();
 	for(i = 0; i < 3; i++) {
 		for(j = 0; j < 3; j++) {
 			printf("%c ", map[i][j]);
@@ -86,4 +86,29 @@ int check_win(void)  {
 		}
 	}
 	return (k == 9 ? 1 : 0);
+}
+
+void play_game (void) {
+	int win = 0, r;
+	init_table();
+	print_table();
+
+	while(win != 1) {
+		check_move(tolower(mygetch()));
+		print_table();
+		win = check_win();
+		if(win == 1) {
+			CLEAR_SCREEN();
+			printf("Parabens, voce vence!!\nDigite R pra jogar novamente!\n");
+			r = mygetch();
+		}
+	}
+	if(tolower(r) == 'r') {
+		play_game();
+	} else {
+		CLEAR_SCREEN();
+		printf("Até mais\n");
+		sleep(1);
+		CLEAR_SCREEN();
+	}
 }
