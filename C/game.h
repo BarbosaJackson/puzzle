@@ -1,5 +1,4 @@
 #include "mylibs.h"
-#include <ncurses.h>
 
 char map[3][3];
 int i_white, j_white;
