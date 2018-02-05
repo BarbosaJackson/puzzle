@@ -82,14 +82,16 @@ int check_win(void)  {
 	int i, j, k = 1;
 	for(i = 0; i < 3; i++) {
 		for(j = 0; j < 3; j++) {
-			if(k+'0' == map[i][j]) k++;
+			if(isdigit(map[i][j]))
+				k++;
+			else if(k < 9)return 0;
 		}
-	}
+	}	
 	return (k == 9 ? 1 : 0);
 }
 
 void play_game (void) {
-	int win = 0, r;
+	int win = 0;
 	init_table();
 	print_table();
 
@@ -100,15 +102,15 @@ void play_game (void) {
 		if(win == 1) {
 			CLEAR_SCREEN();
 			printf("Parabens, voce vence!!\nDigite R pra jogar novamente!\n");
-			r = mygetch();
+			if(tolower(mygetch()) == 'r') {
+				play_game();
+			} else {
+				CLEAR_SCREEN();
+				printf("Até mais\n");
+				sleep(1);
+				CLEAR_SCREEN();
+			}
 		}
 	}
-	if(tolower(r) == 'r') {
-		play_game();
-	} else {
-		CLEAR_SCREEN();
-		printf("Até mais\n");
-		sleep(1);
-		CLEAR_SCREEN();
-	}
+	
 }
