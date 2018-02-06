@@ -82,8 +82,8 @@ int check_win(void)  {
 	int i, j, k = 1;
 	for(i = 0; i < 3; i++) {
 		for(j = 0; j < 3; j++) {
-			if(isdigit(map[i][j]))
-				k++;
+			if(j > 0 && map[i][j-1] > map[i][j]) return 0;
+			else if(isdigit(map[i][j])) k++;
 			else if(k < 9)return 0;
 		}
 	}	
